@@ -43,4 +43,38 @@ describe("#h", () => {
       children: ["some text"],
     });
   });
+
+  it("turns array values into space-separated strings", () => {
+    assert.deepEqual(
+      h("div", {
+        class: ["foo", "bar", "baz"],
+      }),
+      {
+        tagName: "div",
+        properties: {
+          class: "foo bar baz",
+        },
+        children: [],
+      },
+    );
+  });
+
+  it("accepts nested attributes", () => {
+    assert.deepEqual(
+      h("div", {
+        data: {
+          foo: {
+            bar: "baz",
+          },
+        },
+      }),
+      {
+        tagName: "div",
+        properties: {
+          "data-foo-bar": "baz",
+        },
+        children: [],
+      },
+    );
+  });
 });
