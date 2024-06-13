@@ -1,5 +1,4 @@
-import { HTML_TAGS } from "./tags";
-import { Node, ElementNode, Properties, isNode, H } from "./types";
+import { H, Node, Properties, isNode } from "./types";
 
 export const h: H = (
   tagName: string,

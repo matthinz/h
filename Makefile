@@ -1,12 +1,15 @@
 BUILD_DIR=dist
 SRC_DIR=src
 
-.PHONY: build clean test
+.PHONY: build clean format test
 
 build: $(BUILD_DIR)/h.js
 
 clean:
 	@rm -rf $(BUILD_DIR)
+
+format: node_modules
+	yarn prettier --write $(SRC_DIR)
 
 test: build
 	node --enable-source-maps --test $(shell find $(BUILD_DIR) -name '*.test.js')
