@@ -1,2 +1,3 @@
 # h
-A Typescript view engine
+
+Write your views in Typescript.
