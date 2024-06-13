@@ -12,6 +12,13 @@ describe("#render", () => {
     );
   });
 
+  it("sorts attributes", () => {
+    assert.equal(
+      render(h("div", { "data-z": "foo", "data-a": "bar", "data-c": "baz" })),
+      '<div data-a="bar" data-c="baz" data-z="foo"></div>',
+    );
+  });
+
   describe("literal nodes", () => {
     it("is rendered literally", () => {
       assert.equal(render({ content: "<!doctype html>" }), "<!doctype html>");
@@ -31,7 +38,7 @@ describe("#render", () => {
         it("includes attribute when true", () => {
           assert.equal(
             render(h("input", { type: "checkbox", checked: true })),
-            '<input type="checkbox" checked>',
+            '<input checked type="checkbox">',
           );
         });
       });

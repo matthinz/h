@@ -1,6 +1,8 @@
 import { BOOLEAN_ATTRIBUTES, UNCLOSED_TAGS } from "./tags";
 import { ElementNode, Node, isLiteralNode } from "./types";
 
+const NOOP = () => {};
+
 const ELEMENT_ADAPTERS: {
   [key: string]: (node: ElementNode) => ElementNode;
 } = {
@@ -23,50 +25,74 @@ const ELEMENT_ADAPTERS: {
   },
 };
 
-type ChunkCallback = (chunk: string) => void;
+type WriteCallback = (data: string) => void;
+type FlushCallback = () => void;
 
 export function render(node: Node): string;
-export function render(node: Node, callback: ChunkCallback): void;
+export function render(node: Node, callback: WriteCallback): void;
 export function render(node: Node, stream: WritableStream): void;
 export function render(
   node: Node,
-  callbackOrStream?: ChunkCallback | WritableStream,
+  callbackOrStream?: WriteCallback | WritableStream,
 ): void | string {
   if (callbackOrStream) {
     if (typeof callbackOrStream === "function") {
-      internalRender(node, callbackOrStream);
+      internalRender(node, {
+        write: callbackOrStream,
+        flush: NOOP,
+      });
     } else {
       const writer = callbackOrStream.getWriter();
-      internalRender(node, (chunk) => {
-        writer.write(chunk);
+      internalRender(node, {
+        write(chunk) {
+          writer.write(chunk);
+        },
+        flush: NOOP,
       });
     }
   } else {
-    const result: string[] = [];
-    internalRender(node, (chunk) => result.push(chunk));
+    let result: string[] = [];
+    internalRender(node, {
+      write(chunk) {
+        result.push(chunk);
+      },
+      flush() {
+        result = [result.join("")];
+      },
+    });
     return result.join("");
   }
 }
 
-function internalRender(node: Node, callback: ChunkCallback) {
+type InternalRenderOptions = {
+  write: WriteCallback;
+  flush: FlushCallback;
+};
+
+function internalRender(node: Node, { write, flush }: InternalRenderOptions) {
   if (node == null || node === false) {
     return;
   }
 
   if (typeof node === "string") {
-    callback(htmlEncode(node));
+    write(htmlEncode(node));
     return;
   }
 
   if (isLiteralNode(node)) {
-    callback(node.content);
+    write(node.content);
+    flush();
     return;
   }
 
   if (Array.isArray(node)) {
     node.forEach((n) => {
-      internalRender(n, callback);
+      internalRender(n, {
+        write,
+        flush: NOOP,
+      });
     });
+    flush();
     return;
   }
 
@@ -74,19 +100,29 @@ function internalRender(node: Node, callback: ChunkCallback) {
     ? ELEMENT_ADAPTERS[node.tagName](node)
     : node;
 
-  callback(`<${tagName}`);
+  write(`<${tagName}`);
 
-  Object.keys(properties).forEach((name) => {
-    callback(renderHtmlAttribute(name, properties[name]));
+  const renderedAttributes = Object.keys(properties).map((name) =>
+    renderHtmlAttribute(name, properties[name]),
+  );
+
+  renderedAttributes.sort();
+
+  renderedAttributes.forEach((attr) => {
+    write(attr);
   });
 
-  callback(">");
+  write(">");
 
-  children.forEach((c) => internalRender(c, callback));
+  flush();
+
+  children.forEach((c) => internalRender(c, { write, flush: NOOP }));
 
   if (!UNCLOSED_TAGS[tagName]) {
-    callback(`</${tagName}>`);
+    write(`</${tagName}>`);
   }
+
+  flush();
 }
 
 function renderHtmlAttribute(name: string, value: unknown) {
