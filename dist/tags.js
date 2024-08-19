@@ -12,3 +12,4 @@ exports.BOOLEAN_ATTRIBUTES = {
     disabled: true,
     readonly: true,
 };
+//# sourceMappingURL=tags.js.map

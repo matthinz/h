@@ -41,3 +41,4 @@ const _1 = require(".");
         });
     });
 });
+//# sourceMappingURL=renderer.test.js.map
