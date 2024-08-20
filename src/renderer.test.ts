@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { h, render } from ".";
+import { DocType, h, render } from ".";
 
 describe("#render", () => {
   it("renders deep trees", () => {
@@ -22,10 +22,7 @@ describe("#render", () => {
 
   describe("literal nodes", () => {
     it("is rendered literally", () => {
-      assert.equal(
-        render({ __content__: "<!doctype html>" }),
-        "<!doctype html>",
-      );
+      assert.equal(render(DocType.HTML), "<!doctype html>");
     });
   });
 
