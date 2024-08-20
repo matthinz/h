@@ -59,7 +59,7 @@ function internalRender(node, { write, flush }) {
         return;
     }
     if ((0, types_1.isLiteralNode)(node)) {
-        write(node.content);
+        write(node.__content__);
         flush();
         return;
     }

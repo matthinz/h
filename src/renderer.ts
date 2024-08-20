@@ -80,7 +80,7 @@ function internalRender(node: Node, { write, flush }: InternalRenderOptions) {
   }
 
   if (isLiteralNode(node)) {
-    write(node.content);
+    write(node.__content__);
     flush();
     return;
   }

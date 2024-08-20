@@ -6,7 +6,7 @@ export type H = {
 };
 export type Node = ElementNode | LiteralNode | string | null | undefined | false | Node[];
 export type LiteralNode = {
-    readonly content: string;
+    readonly __content__: string;
 };
 export type ElementNode = {
     readonly tagName: string;

@@ -22,7 +22,10 @@ describe("#render", () => {
 
   describe("literal nodes", () => {
     it("is rendered literally", () => {
-      assert.equal(render({ content: "<!doctype html>" }), "<!doctype html>");
+      assert.equal(
+        render({ __content__: "<!doctype html>" }),
+        "<!doctype html>",
+      );
     });
   });
 

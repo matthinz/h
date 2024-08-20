@@ -17,7 +17,7 @@ function isLiteralNode(x) {
     if (!x || typeof x !== "object") {
         return false;
     }
-    return !!("content" in x && typeof x.content === "string");
+    return !!("__content__" in x && typeof x.__content__ === "string");
 }
 exports.isLiteralNode = isLiteralNode;
 function isNode(x) {

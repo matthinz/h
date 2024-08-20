@@ -15,7 +15,7 @@ const _1 = require(".");
     });
     (0, node_test_1.describe)("literal nodes", () => {
         (0, node_test_1.it)("is rendered literally", () => {
-            node_assert_1.default.equal((0, _1.render)({ content: "<!doctype html>" }), "<!doctype html>");
+            node_assert_1.default.equal((0, _1.render)({ __content__: "<!doctype html>" }), "<!doctype html>");
         });
     });
     (0, node_test_1.describe)("specific tags", () => {

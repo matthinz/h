@@ -15,7 +15,7 @@ export type Node =
   | Node[];
 
 export type LiteralNode = {
-  readonly content: string;
+  readonly __content__: string;
 };
 
 export type ElementNode = {
@@ -44,7 +44,7 @@ export function isLiteralNode(x: unknown): x is LiteralNode {
   if (!x || typeof x !== "object") {
     return false;
   }
-  return !!("content" in x && typeof x.content === "string");
+  return !!("__content__" in x && typeof x.__content__ === "string");
 }
 
 export function isNode(x: unknown): x is Node {
