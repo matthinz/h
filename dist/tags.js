@@ -6,6 +6,7 @@ exports.UNCLOSED_TAGS = {
     img: true,
     input: true,
     link: true,
+    meta: true,
 };
 exports.BOOLEAN_ATTRIBUTES = {
     checked: true,

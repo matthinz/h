@@ -4,6 +4,7 @@ export const UNCLOSED_TAGS: { [key: string]: boolean | undefined } = {
   img: true,
   input: true,
   link: true,
+  meta: true,
 } as const;
 
 export const BOOLEAN_ATTRIBUTES: { [key: string]: boolean | undefined } = {
