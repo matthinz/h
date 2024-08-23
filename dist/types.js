@@ -1,23 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isNode = exports.isLiteralNode = exports.isElementNode = void 0;
+exports.isNode = exports.isLiteralNode = exports.isElementNode = exports.NODE_TYPE_ELEMENT = exports.NODE_TYPE_LITERAL = exports.NodeTypeSymbol = void 0;
+exports.NodeTypeSymbol = Symbol("node_type");
+exports.NODE_TYPE_LITERAL = 1;
+exports.NODE_TYPE_ELEMENT = 2;
 function isElementNode(x) {
     if (!x || typeof x !== "object") {
         return false;
     }
-    return !!("tagName" in x &&
-        typeof x.tagName === "string" &&
-        "properties" in x &&
-        x.properties &&
-        "children" in x &&
-        Array.isArray(x.children));
+    return exports.NodeTypeSymbol in x && x[exports.NodeTypeSymbol] === exports.NODE_TYPE_ELEMENT;
 }
 exports.isElementNode = isElementNode;
 function isLiteralNode(x) {
     if (!x || typeof x !== "object") {
         return false;
     }
-    return !!("__content__" in x && typeof x.__content__ === "string");
+    return exports.NodeTypeSymbol in x && x[exports.NodeTypeSymbol] === exports.NODE_TYPE_LITERAL;
 }
 exports.isLiteralNode = isLiteralNode;
 function isNode(x) {

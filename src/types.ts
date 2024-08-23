@@ -1,3 +1,11 @@
+export const NodeTypeSymbol = Symbol("node_type");
+
+export const NODE_TYPE_LITERAL = 1 as const;
+export const NODE_TYPE_ELEMENT = 2 as const;
+
+type NodeTypeLiteral = typeof NODE_TYPE_LITERAL;
+type NodeTypeElement = typeof NODE_TYPE_ELEMENT;
+
 export type H = {
   (tagName: string): ElementNode;
   (tagName: string, properties: Properties): ElementNode;
@@ -15,10 +23,12 @@ export type Node =
   | Node[];
 
 export type LiteralNode = {
-  readonly __content__: string;
+  readonly [NodeTypeSymbol]: NodeTypeLiteral;
+  readonly content: string;
 };
 
 export type ElementNode = {
+  readonly [NodeTypeSymbol]: NodeTypeElement;
   readonly tagName: string;
   readonly properties: Properties;
   readonly children: Node[];
@@ -30,21 +40,14 @@ export function isElementNode(x: unknown): x is ElementNode {
   if (!x || typeof x !== "object") {
     return false;
   }
-  return !!(
-    "tagName" in x &&
-    typeof x.tagName === "string" &&
-    "properties" in x &&
-    x.properties &&
-    "children" in x &&
-    Array.isArray(x.children)
-  );
+  return NodeTypeSymbol in x && x[NodeTypeSymbol] === NODE_TYPE_ELEMENT;
 }
 
 export function isLiteralNode(x: unknown): x is LiteralNode {
   if (!x || typeof x !== "object") {
     return false;
   }
-  return !!("__content__" in x && typeof x.__content__ === "string");
+  return NodeTypeSymbol in x && x[NodeTypeSymbol] === NODE_TYPE_LITERAL;
 }
 
 export function isNode(x: unknown): x is Node {

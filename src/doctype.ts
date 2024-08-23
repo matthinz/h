@@ -1,3 +1,3 @@
-export const HTML = {
-  __content__: "<!doctype html>",
-};
+import { literal } from "./literal";
+
+export const HTML = literal("<!doctype html>");

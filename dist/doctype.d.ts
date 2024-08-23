@@ -1,3 +1,1 @@
-export declare const HTML: {
-    __content__: string;
-};
+export declare const HTML: import("./types").LiteralNode;
