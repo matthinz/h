@@ -23,10 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.render = exports.h = exports.DocType = void 0;
+exports.TAGS = exports.render = exports.h = exports.DocType = void 0;
 exports.DocType = __importStar(require("./doctype"));
 var h_1 = require("./h");
 Object.defineProperty(exports, "h", { enumerable: true, get: function () { return h_1.h; } });
 var renderer_1 = require("./renderer");
 Object.defineProperty(exports, "render", { enumerable: true, get: function () { return renderer_1.render; } });
+var tags_1 = require("./tags");
+Object.defineProperty(exports, "TAGS", { enumerable: true, get: function () { return tags_1.TAGS; } });
 //# sourceMappingURL=index.js.map

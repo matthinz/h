@@ -9,6 +9,12 @@ export type H = {
     (tagName: string, children: Node): ElementNode;
     (tagName: string, properties: Properties, children: Node): ElementNode;
 };
+export type TaggedH = {
+    (): ElementNode;
+    (properties: Properties): ElementNode;
+    (children: Node): ElementNode;
+    (properties: Properties, children: Node): ElementNode;
+};
 export type Node = ElementNode | LiteralNode | string | null | undefined | false | Node[];
 export type LiteralNode = {
     readonly [NodeTypeSymbol]: NodeTypeLiteral;

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BOOLEAN_ATTRIBUTES = exports.UNCLOSED_TAGS = exports.HTML_TAGS = void 0;
+exports.TAGS = exports.BOOLEAN_ATTRIBUTES = exports.UNCLOSED_TAGS = exports.HTML_TAGS = void 0;
+const h_1 = require("./h");
 exports.HTML_TAGS = ["a", "div", "span", "p"];
 exports.UNCLOSED_TAGS = {
     img: true,
@@ -13,4 +14,11 @@ exports.BOOLEAN_ATTRIBUTES = {
     disabled: true,
     readonly: true,
 };
+exports.TAGS = exports.HTML_TAGS.reduce((result, tagName) => {
+    result[tagName] = makeTaggedH(tagName);
+    return result;
+}, {});
+function makeTaggedH(tagName) {
+    return h_1.h.bind(undefined, tagName);
+}
 //# sourceMappingURL=tags.js.map

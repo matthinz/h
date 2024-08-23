@@ -13,6 +13,13 @@ export type H = {
   (tagName: string, properties: Properties, children: Node): ElementNode;
 };
 
+export type TaggedH = {
+  (): ElementNode;
+  (properties: Properties): ElementNode;
+  (children: Node): ElementNode;
+  (properties: Properties, children: Node): ElementNode;
+};
+
 export type Node =
   | ElementNode
   | LiteralNode
