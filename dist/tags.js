@@ -2,7 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TAGS = exports.BOOLEAN_ATTRIBUTES = exports.UNCLOSED_TAGS = exports.HTML_TAGS = void 0;
 const h_1 = require("./h");
-exports.HTML_TAGS = ["a", "div", "span", "p"];
+exports.HTML_TAGS = [
+    "a",
+    "body",
+    "address",
+    "article",
+    "div",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "li",
+    "ol",
+    "p",
+    "section",
+    "span",
+    "ul",
+];
 exports.UNCLOSED_TAGS = {
     img: true,
     input: true,

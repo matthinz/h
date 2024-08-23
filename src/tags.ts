@@ -1,7 +1,25 @@
 import { h } from "./h";
 import { TaggedH } from "./types";
 
-export const HTML_TAGS = ["a", "div", "span", "p"] as const;
+export const HTML_TAGS = [
+  "a",
+  "body",
+  "address",
+  "article",
+  "div",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "li",
+  "ol",
+  "p",
+  "section",
+  "span",
+  "ul",
+] as const;
 
 export const UNCLOSED_TAGS: { [key: string]: boolean | undefined } = {
   img: true,
