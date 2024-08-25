@@ -23,7 +23,6 @@ function normalizeProperties(properties) {
     }, {});
 }
 function expandValues(key, value) {
-    console.error("expandValues", key, value, typeof value);
     if (value == null) {
         return [];
     }
