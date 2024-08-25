@@ -2,6 +2,7 @@ import assert from "node:assert";
 import { describe, it } from "node:test";
 
 import { h } from "./h";
+import { NODE_TYPE_ELEMENT, NodeTypeSymbol } from "./types";
 
 describe("#h", () => {
   it("accepts just tagName", () => {
@@ -72,6 +73,29 @@ describe("#h", () => {
         tagName: "div",
         properties: {
           "data-foo-bar": "baz",
+        },
+        children: [],
+      },
+    );
+  });
+
+  it("allows passing an object for class", () => {
+    assert.deepEqual(
+      h(
+        "div",
+        {
+          class: {
+            "should-appear": true,
+            "should-not-appear": false,
+          },
+        },
+        [],
+      ),
+      {
+        [NodeTypeSymbol]: NODE_TYPE_ELEMENT,
+        tagName: "div",
+        properties: {
+          class: "should-appear",
         },
         children: [],
       },

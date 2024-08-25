@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_assert_1 = __importDefault(require("node:assert"));
 const node_test_1 = require("node:test");
 const h_1 = require("./h");
+const types_1 = require("./types");
 (0, node_test_1.describe)("#h", () => {
     (0, node_test_1.it)("accepts just tagName", () => {
         node_assert_1.default.deepEqual((0, h_1.h)("div"), {
@@ -64,6 +65,21 @@ const h_1 = require("./h");
             tagName: "div",
             properties: {
                 "data-foo-bar": "baz",
+            },
+            children: [],
+        });
+    });
+    (0, node_test_1.it)("allows passing an object for class", () => {
+        node_assert_1.default.deepEqual((0, h_1.h)("div", {
+            class: {
+                "should-appear": true,
+                "should-not-appear": false,
+            },
+        }, []), {
+            [types_1.NodeTypeSymbol]: types_1.NODE_TYPE_ELEMENT,
+            tagName: "div",
+            properties: {
+                class: "should-appear",
             },
             children: [],
         });

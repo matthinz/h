@@ -70,6 +70,21 @@ function expandValues(key: string, value: unknown): ResolvedProperty[] {
   }
 
   if (typeof value === "object") {
+    if (key === "class") {
+      const classNames = Object.keys(value);
+      return [
+        {
+          key,
+          value: classNames
+            .filter((className) => {
+              const ok = (value as any)[className];
+              return ok;
+            })
+            .join(" "),
+        },
+      ];
+    }
+
     return Object.keys(value).reduce<ResolvedProperty[]>((result, subkey) => {
       expandValues(subkey, (value as any)[subkey]).forEach((attr) => {
         result.push({

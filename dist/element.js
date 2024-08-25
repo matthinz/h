@@ -23,6 +23,7 @@ function normalizeProperties(properties) {
     }, {});
 }
 function expandValues(key, value) {
+    console.error("expandValues", key, value, typeof value);
     if (value == null) {
         return [];
     }
@@ -43,6 +44,20 @@ function expandValues(key, value) {
         ];
     }
     if (typeof value === "object") {
+        if (key === "class") {
+            const classNames = Object.keys(value);
+            return [
+                {
+                    key,
+                    value: classNames
+                        .filter((className) => {
+                        const ok = value[className];
+                        return ok;
+                    })
+                        .join(" "),
+                },
+            ];
+        }
         return Object.keys(value).reduce((result, subkey) => {
             expandValues(subkey, value[subkey]).forEach((attr) => {
                 result.push({
