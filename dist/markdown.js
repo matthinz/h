@@ -81,7 +81,6 @@ function createListWriter(numberer) {
                 else {
                     bullet = numberer(itemIndex);
                 }
-                console.error({ firstLine, otherLines });
                 write(`${bullet}${firstLine}`, true);
                 otherLines.forEach((l) => write(`  ${l}\n`, true));
                 itemIndex += 1;
