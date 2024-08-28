@@ -126,8 +126,6 @@ function createListWriter(
           bullet = numberer(itemIndex);
         }
 
-        console.error({ firstLine, otherLines });
-
         write(`${bullet}${firstLine}`, true);
         otherLines.forEach((l) => write(`  ${l}\n`, true));
 
